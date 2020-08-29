@@ -8,7 +8,7 @@ class ScreenWidget extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('StatelessWidget'),
+          title: const Text('StatfulWidget'),
         ),
         body: SimpleWidget(),
       ),
@@ -16,11 +16,46 @@ class ScreenWidget extends StatelessWidget {
   }
 }
 
-class SimpleWidget extends StatelessWidget {
+class SimpleWidget extends StatefulWidget {
+  @override
+  _SimpleWidgetState createState() => new _SimpleWidgetState();
+}
+
+class _SimpleWidgetState extends State<SimpleWidget> {
+  int _count = 0;
+
+  void _handleButton() {
+    setState(() {
+      _count++;
+    });
+  }
+
+  void _clearButton() {
+    setState(() {
+      _count = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Center(
-            child: new Text('Some text', textDirection: TextDirection.ltr)));
+    return Center(
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('$_count'),
+            RaisedButton(
+              onPressed: () {
+                _handleButton();
+              },
+              child: Text('Click me'),
+            ),
+            RaisedButton(
+              onPressed: () {
+                _clearButton();
+              },
+              child: Text('Clear counter'),
+            )
+          ]),
+    );
   }
 }
